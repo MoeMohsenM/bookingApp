@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { createNewUser } from "../features/User/UserSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function RegisterPage() {
   const {
@@ -10,13 +11,29 @@ function RegisterPage() {
     watch,
     formState: { errors },
   } = useForm();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    const { fullName, email, country, phone } = data;
-    dispatch(createNewUser(fullName, email, country, phone));
-    navigate("/login");
+  const onSubmit = async (data) => {
+    const { fullName, email, country, phone, password } = data;
+
+    try {
+      await axios.post("http://localhost:8000/users", {
+        fullName,
+        email,
+        country,
+        phone,
+        password,
+      });
+
+      dispatch(createNewUser(fullName, email, country, phone));
+
+      navigate("/login");
+    } catch (error) {
+      console.error("Failed to register:", error);
+      alert("Registration failed. Try again.");
+    }
   };
 
   return (
@@ -50,10 +67,10 @@ function RegisterPage() {
         placeholder="Confirm Password"
         {...register("confirmPassword", {
           required: true,
-          validate: (value) => value === watch("password"),
+          validate: (value) => value === watch("password") || "Passwords must match",
         })}
       />
-      {errors.confirmPassword && <p>Passwords must match</p>}
+      {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
 
       <input placeholder="Country" {...register("country", { required: true })} />
       {errors.country && <p>Country is required</p>}
