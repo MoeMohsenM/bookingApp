@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../network/axios";
 import HotelCard from "../components/HotelCard";
 import Navbar from "../components/Navbar";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/Searchbar";
 import Sidebar from "../components/Sidebar"
 import BestOffersWrapper from "../components/BestOfferWrapper"
 
@@ -18,9 +18,6 @@ function HomePage() {
 
   return (
     <div >
-      <Navbar/>
-      <Sidebar/>
-      <SearchBar/>
       <div style={{ padding: "2rem" }}>
         <h1>Hotels</h1>
         {hotels.map((hotel) => (

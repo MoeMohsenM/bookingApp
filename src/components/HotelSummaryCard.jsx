@@ -16,10 +16,14 @@ const HotelSummaryCard = ({ hotel }) => {
 
   const displayPrice = pricing[0]; // Assume single room is displayed
   const formattedCheckIn = new Date(checkInDate).toLocaleDateString("en-GB", {
-    day: "2-digit", month: "short", year: "numeric"
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
   });
   const formattedCheckOut = new Date(checkOutDate).toLocaleDateString("en-GB", {
-    day: "2-digit", month: "short", year: "numeric"
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
   });
 
   return (
@@ -40,11 +44,12 @@ const HotelSummaryCard = ({ hotel }) => {
         </div>
 
         <p style={styles.discount}>
-          {displayPrice.discount} <strong style={styles.price}>${displayPrice.discountedPrice}</strong>
+          {displayPrice.discount}{" "}
+          <strong style={styles.price}>${displayPrice.discountedPrice}</strong>
         </p>
 
         <div style={styles.footer}>
-          <span>From: 📅 {formattedCheckIn}</span> | 
+          <span>From: 📅 {formattedCheckIn}</span> |
           <span> To: 📅 {formattedCheckOut}</span>
         </div>
       </div>
@@ -64,49 +69,49 @@ const styles = {
     borderRadius: "8px",
     overflow: "hidden",
     marginBottom: "16px",
-    position: "relative"
+    position: "relative",
   },
   image: {
     width: "250px",
-    objectFit: "cover"
+    objectFit: "cover",
   },
   details: {
     padding: "16px",
-    flex: 1
+    flex: 1,
   },
   titleSection: {
-    marginBottom: "8px"
+    marginBottom: "8px",
   },
   title: {
     margin: 0,
-    fontSize: "18px"
+    fontSize: "18px",
   },
   location: {
     fontWeight: "bold",
-    color: "#444"
+    color: "#444",
   },
   address: {
     fontSize: "14px",
-    color: "#666"
+    color: "#666",
   },
   amenities: {
     display: "flex",
     gap: "12px",
-    margin: "8px 0"
+    margin: "8px 0",
   },
   discount: {
     color: "#E08A00",
-    fontSize: "14px"
+    fontSize: "14px",
   },
   price: {
     color: "#000",
     fontSize: "18px",
-    marginLeft: "8px"
+    marginLeft: "8px",
   },
   footer: {
     fontSize: "13px",
     marginTop: "8px",
-    color: "#333"
+    color: "#333",
   },
   rating: {
     position: "absolute",
@@ -118,11 +123,11 @@ const styles = {
     padding: "4px 10px",
     display: "flex",
     alignItems: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   ratingValue: {
-    marginRight: "4px"
-  }
+    marginRight: "4px",
+  },
 };
 
 export default HotelSummaryCard;

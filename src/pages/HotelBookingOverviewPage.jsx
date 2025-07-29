@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { bookHotel } from "../features/User/UserSlice";
 
-
 export default function HotelBookingOverviewPage() {
   const { register, handleSubmit } = useForm();
   const hotel = useSelector((state) => state.hotel);
@@ -23,11 +22,10 @@ export default function HotelBookingOverviewPage() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   console.log("User Data:", user);
- function handlePay() {
-  dispatch(bookHotel(hotel)); // Push current hotel to bookings array
-  navigate("/summary");
-}
-
+  function handlePay() {
+    dispatch(bookHotel(hotel)); // Push current hotel to bookings array
+    navigate("/summary");
+  }
 
   const onSubmit = (data) => {
     console.log("Form Submitted:", data);

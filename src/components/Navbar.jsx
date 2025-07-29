@@ -5,14 +5,29 @@ import { IoHomeSharp } from "react-icons/io5";
 import { MdLocalTaxi } from "react-icons/md";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
+  const { isAuthenticated, fullName } = useSelector((state) => state.user);
+
   return (
     <nav className={Styles.nav}>
-        <div className={Styles.upper__section}>
-            <Link to="/login">Login </Link>
-            <Link to="/register">Sign up </Link>
-        </div>
+     <div className={Styles.upper__section}>
+  <span
+    className={Styles.user__greeting}
+    style={{ display: isAuthenticated ? "inline" : "none" }}
+  >
+    Hi, {fullName}
+  </span>
+  <Link to="/login" style={{ display: isAuthenticated ? "none" : "inline" }}>
+    Login
+  </Link>
+  <Link to="/register" style={{ display: isAuthenticated ? "none" : "inline" }}>
+    Sign up
+  </Link>
+</div>
+
+
       <ul className={Styles.nav__icons}>
         <li>
           <Link to="/hotels">
@@ -28,13 +43,13 @@ export const Navbar = () => {
         </li>
         <li>
           <Link to="/taxis">
-            <MdLocalTaxi size={24}/>
+            <MdLocalTaxi size={24} />
             <p>TAXI</p>
           </Link>
         </li>
         <li>
           <Link to="/flights">
-            <GiAirplaneDeparture size={24}/>
+            <GiAirplaneDeparture size={24} />
             <p>FLIGHTS</p>
           </Link>
         </li>

@@ -1,20 +1,20 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing: border-box;
-    font-family:"Poppins", sans-serif!important;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif !important;
+}
+body {
+  display: block;
+}
+body {
+  font-family: "Poppins", sans-serif !important;
 }
 
-body{
-    font-family: "Poppins", sans-serif!important;
+li {
+  list-style: none;
 }
 
-li{
-    list-style: none;
+a {
+  text-decoration: none;
 }
-
-a{
-    text-decoration:none;
-}
-
-

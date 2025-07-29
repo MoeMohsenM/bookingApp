@@ -1,6 +1,6 @@
 body{
-    display:flex;
-    justify-content: center;
+    // display:flex;
+    // justify-content: center;
     font-family:"Poppins", sans-serif;
     height:100vh;
 }
@@ -8,6 +8,7 @@ body{
 .container{
     display:flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding:5.437rem 9.9375rem;
 
@@ -114,6 +115,8 @@ a{
 
     .login__wrapper{
         display:flex;
+        justify-content: center;
+        align-items: center;
       height:100vh;
       gap:.5625rem;
       margin:1rem;

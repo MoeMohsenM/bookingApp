@@ -38,7 +38,7 @@ const Sidebar = () => {
         boxShadow: 3,
         p: 2,
 
-        position: "fixed",
+        position: "sticky",
         top: "0",
         left: "2.3rem",
         display: "flex",

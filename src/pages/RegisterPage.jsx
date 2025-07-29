@@ -130,7 +130,7 @@ function RegisterPage() {
               <img src="/images/google 1.svg" alt="Google" />
             </div>
             <p>
-              Register with <strong>Google</strong>
+              Register <strong>Google</strong>
             </p>
           </a>
           <a
@@ -143,7 +143,7 @@ function RegisterPage() {
               <img src="/images/facebook 1.svg" alt="Facebook" />
             </div>
             <p>
-              Register with <strong>Facebook</strong>
+              Register <strong>Facebook</strong>
             </p>
           </a>
         </div>
