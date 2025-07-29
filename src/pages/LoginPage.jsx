@@ -4,6 +4,7 @@ import { login } from "../features/User/UserSlice";
 import { useNavigate } from "react-router-dom";
 import Styles from "../styles/LoginPage.module.scss";
 import { Link } from "react-router-dom";
+import axiosInstance from "../network/axios"; // your axios instance
 
 function LoginPage() {
   const {
@@ -12,16 +13,27 @@ function LoginPage() {
     formState: { errors },
   } = useForm();
 
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    if (data.email === user.email && data.password) {
-      dispatch(login());
-      navigate("/");
-    } else {
-      alert("Invalid credentials");
+  const onSubmit = async (data) => {
+    try {
+      const res = await axiosInstance.get("/users", {
+        params: { email: data.email },
+      });
+
+      const user = res.data[0]; // assuming email is unique
+
+      if (user && user.password === data.password) {
+        dispatch(login(user)); // pass user info to Redux if needed
+        navigate("/");
+      } else {
+        alert("Invalid credentials");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Error connecting to server.");
     }
   };
 

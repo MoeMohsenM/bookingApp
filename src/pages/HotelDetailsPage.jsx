@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { bookHotel } from "../features/Hotel/HotelSlice";
+import { chooseHotel } from "../features/Hotel/HotelSlice";
 import { useNavigate } from "react-router-dom";
 
 function HotelDetailsPage() {
@@ -9,13 +9,8 @@ function HotelDetailsPage() {
   const navigate = useNavigate();
 
   const handleBook = () => {
-    const checkInDate = prompt("Enter Check-In Date (YYYY-MM-DD):");
-    const checkOutDate = prompt("Enter Check-Out Date (YYYY-MM-DD):");
-
-    if (checkInDate && checkOutDate) {
-      dispatch(bookHotel(checkInDate, checkOutDate));
-      alert("Hotel booked successfully!");
-    }
+    navigate("/booking");
+    dispatch(chooseHotel(hotel));
   };
 
   if (!hotel?.id) {
@@ -40,16 +35,28 @@ function HotelDetailsPage() {
 
       <h3>Room Info</h3>
       <p>Room Type: {hotel.pricing[0]?.roomType}</p>
-      <p>Price: {hotel.pricing[0]?.originalPrice} {hotel.pricing[0]?.currency}</p>
+      <p>
+        Price: {hotel.pricing[0]?.originalPrice} {hotel.pricing[0]?.currency}
+      </p>
 
       {/* Booking button logic */}
       {user.isAuthenticated ? (
-        <button onClick={handleBook} style={{ marginTop: "1rem", padding: "0.5rem 1rem" }}>
+        <button
+          onClick={handleBook}
+          style={{ marginTop: "1rem", padding: "0.5rem 1rem" }}
+        >
           Book Hotel
         </button>
       ) : (
         <p style={{ color: "red", marginTop: "1rem" }}>
-          Please <span onClick={() => navigate("/login")} style={{ cursor: "pointer", textDecoration: "underline" }}>login</span> to book this hotel.
+          Please{" "}
+          <span
+            onClick={() => navigate("/login")}
+            style={{ cursor: "pointer", textDecoration: "underline" }}
+          >
+            login
+          </span>{" "}
+          to book this hotel.
         </p>
       )}
     </div>

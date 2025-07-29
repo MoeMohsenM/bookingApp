@@ -1,13 +1,13 @@
-{"bookings":[],
-
+{
   "users": [
     {
       "id": "b243",
-      "fullName": "asd",
+      "fullName": "asd mohsen",
       "email": "asd@asd.com",
       "country": "asd",
       "phone": "213",
-      "password": "asd123@A"
+      "password": "asd123@A",
+      "bookings":[]
     }
   ],
   "hotels": [

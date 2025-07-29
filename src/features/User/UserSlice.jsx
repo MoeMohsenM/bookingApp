@@ -5,6 +5,7 @@ const initialState = {
   email: "",
   country: "",
   phone: "",
+  bookings: [],
   isAuthenticated: false,
 };
 
@@ -27,14 +28,33 @@ const userSlice = createSlice({
         state.isAuthenticated = false;
       },
     },
-    login(state) {
+    bookHotel(state, action) {
+  if (!state.bookings) {
+    state.bookings = [];
+  }
+  state.bookings.push(action.payload);
+}
+,
+
+    // ✅ login now accepts payload with user data
+    login(state, action) {
+      const { fullName, email, country, phone } = action.payload;
+      state.fullName = fullName;
+      state.email = email;
+      state.country = country;
+      state.phone = phone;
       state.isAuthenticated = true;
     },
+
     logout(state) {
+      state.fullName = "";
+      state.email = "";
+      state.country = "";
+      state.phone = "";
       state.isAuthenticated = false;
     },
   },
 });
 
-export const { createNewUser, login, logout } = userSlice.actions;
+export const { createNewUser, login, logout, bookHotel } = userSlice.actions;
 export default userSlice.reducer;

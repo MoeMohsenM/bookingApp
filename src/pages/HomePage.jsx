@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../network/axios";
 import HotelCard from "../components/HotelCard";
 import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
+import SearchBar from "../components/SearchBar";
+import Sidebar from "../components/Sidebar"
+import BestOffersWrapper from "../components/BestOfferWrapper"
 
 function HomePage() {
   const [hotels, setHotels] = useState([]);
@@ -18,12 +20,14 @@ function HomePage() {
     <div >
       <Navbar/>
       <Sidebar/>
+      <SearchBar/>
       <div style={{ padding: "2rem" }}>
         <h1>Hotels</h1>
         {hotels.map((hotel) => (
           <HotelCard key={hotel.id} hotel={hotel} />
         ))}
       </div>
+      <BestOffersWrapper/>
     </div>
   );
 }
