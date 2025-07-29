@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../network/axios";
 import HotelCard from "../components/HotelCard";
-import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-// import Styles from "../styles/HomePage.modules.scss"
+import Sidebar from "../components/Sidebar";
 
 function HomePage() {
   const [hotels, setHotels] = useState([]);
@@ -18,7 +17,7 @@ function HomePage() {
   return (
     <div >
       <Navbar/>
-      <Sidebar />
+      <Sidebar/>
       <div style={{ padding: "2rem" }}>
         <h1>Hotels</h1>
         {hotels.map((hotel) => (
