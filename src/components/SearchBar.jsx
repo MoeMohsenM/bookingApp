@@ -13,26 +13,24 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { chooseHotel } from "../features/Hotel/HotelSlice";
 
-
 export default function SearchForm() {
   const [search, setSearch] = useState("");
   const [country, setCountry] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const dispatch = useDispatch();
 
-  
-// inside your component:
-const navigate = useNavigate();
+  // inside your component:
+  const navigate = useNavigate();
 
-const handleSearch = () => {
-  // Save check-in date to Redux hotel state (for both checkInDate and checkOutDate)
-  dispatch(chooseHotel({ checkInDate: checkIn, checkOutDate: checkIn }));
-  const params = new URLSearchParams({
-    query: search,
-    country,
-  });
-  navigate(`/search?${params.toString()}`);
-};
+  const handleSearch = () => {
+    // Save check-in date to Redux hotel state (for both checkInDate and checkOutDate)
+    dispatch(chooseHotel({ checkInDate: checkIn, checkOutDate: checkIn }));
+    const params = new URLSearchParams({
+      query: search,
+      country,
+    });
+    navigate(`/search?${params.toString()}`);
+  };
 
   const handleClear = () => {
     setSearch("");
@@ -41,13 +39,14 @@ const handleSearch = () => {
   };
 
   const countries = [
-  { label: "United States", value: "US" },
-  { label: "Morocco", value: "MA" },
-  {
-    label: "Egypt",
-    value: "EG",
-  },
-  { label: "Greece", value: "GR" }];
+    { label: "United States", value: "US" },
+    { label: "Morocco", value: "MA" },
+    {
+      label: "Egypt",
+      value: "EG",
+    },
+    { label: "Greece", value: "GR" },
+  ];
 
   return (
     <Box className={Styles.searchBarContainer}>
@@ -147,15 +146,16 @@ const handleSearch = () => {
         Clear Filters
       </Button>
 
-      <Button onClick={handleSearch}  
+      <Button
+        onClick={handleSearch}
         variant="contained"
         className={Styles.searchBtn}
         sx={{
           backgroundColor: "red",
           color: "white",
           borderRadius: "3.625rem",
-          padding: "0.5rem 1.7rem", 
-          marginBottom:"0.3rem",
+          padding: "0.5rem 1.7rem",
+          marginBottom: "0.3rem",
           textTransform: "none", // optional: keep text case unchanged
           "&:hover": {
             backgroundColor: "rgba(223, 20, 45, 1)", // slightly darker red on hover

@@ -1,7 +1,6 @@
-import React from "react";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Searchbar from "./Searchbar";
+import Searchbar from "./SearchBar";
 import { Outlet } from "react-router-dom";
 
 export default function Layout({ children }) {

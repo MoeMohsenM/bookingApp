@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import { bookHotel } from "../features/Hotel/HotelSlice";
+import { useSelector } from "react-redux";
+// import { bookHotel } from "../features/Hotel/HotelSlice";
 import RecommendedHotels from "../components/RecommendedHotels";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -17,12 +17,12 @@ import {
   IoChevronForward,
   IoChevronDown,
 } from "react-icons/io5";
-import Styles from "../styles/HotelDetailsPage.module.scss"
+import Styles from "../styles/HotelDetailsPage.module.scss";
 
 function HotelDetailsPage() {
   const hotel = useSelector((state) => state.hotel);
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  // const user = useSelector((state) => state.user);
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
@@ -73,7 +73,7 @@ function HotelDetailsPage() {
 
   return (
     <div>
-        <div className={Styles.path}>
+      <div className={Styles.path}>
         <span>
           <strong>My Bookings </strong>
         </span>{" "}
@@ -222,13 +222,15 @@ function HotelDetailsPage() {
             </Box>
 
             {/* Information Section */}
-            <Box sx={{ 
-              flex: "1", 
-              padding: "2rem", 
-              backgroundColor: "white",
-              height: "600px",
-              overflowY: "auto"
-            }}>
+            <Box
+              sx={{
+                flex: "1",
+                padding: "2rem",
+                backgroundColor: "white",
+                height: "600px",
+                overflowY: "auto",
+              }}
+            >
               {/* Hotel Review */}
               <Box sx={{ marginBottom: "2rem" }}>
                 <Typography
@@ -423,9 +425,8 @@ function HotelDetailsPage() {
           </Box>
         </Box>
       </Box>
-      <div className={Styles.slider} >
-        
-      <RecommendedHotels />
+      <div className={Styles.slider}>
+        <RecommendedHotels />
       </div>
     </div>
   );
