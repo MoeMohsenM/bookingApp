@@ -117,7 +117,7 @@ function HotelDetailsPage() {
             {/* Image Slider Section */}
             <Box sx={{ flex: "2", position: "relative" }}>
               {/* Main Image */}
-              <Box sx={{ position: "relative", height: "400px" }}>
+              <Box sx={{ position: "relative", height: "600px" }}>
                 <img
                   src={currentImage}
                   alt={hotel?.hotelName || hotel?.name}
@@ -222,7 +222,13 @@ function HotelDetailsPage() {
             </Box>
 
             {/* Information Section */}
-            <Box sx={{ flex: "1", padding: "2rem", backgroundColor: "white" }}>
+            <Box sx={{ 
+              flex: "1", 
+              padding: "2rem", 
+              backgroundColor: "white",
+              height: "600px",
+              overflowY: "auto"
+            }}>
               {/* Hotel Review */}
               <Box sx={{ marginBottom: "2rem" }}>
                 <Typography

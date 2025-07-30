@@ -159,6 +159,116 @@ export default function HotelBookingOverviewPage() {
               {...register("cardHolder")}
             />
 
+            {/* Pay with Apple Pay Section */}
+            <Typography variant="h6" fontWeight="bold" mb={2} sx={{ mt: 4 }}>
+              Pay with Apple Pay
+            </Typography>
+            <Typography variant="body2" mb={3} color="text.secondary">
+              Quick and secure payment with Apple Pay
+            </Typography>
+
+            <Box sx={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: 2, 
+              mb: 3,
+              p: 2,
+              border: "1px solid #e0e0e0",
+              borderRadius: 1,
+              backgroundColor: "#fafbfc"
+            }}>
+              <Box sx={{ 
+                width: 40, 
+                height: 40, 
+                backgroundColor: "#000", 
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}>
+                <Typography sx={{ color: "white", fontSize: "1.2rem" }}>🍎</Typography>
+              </Box>
+              <Box>
+                <Typography variant="body1" fontWeight={500}>
+                  Apple Pay
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Touch ID or Face ID to pay
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* Pay with Points Section */}
+            <Typography variant="h6" fontWeight="bold" mb={2} sx={{ mt: 4 }}>
+              Pay with Points
+            </Typography>
+            <Typography variant="body2" mb={3} color="text.secondary">
+              Use your loyalty points to pay for your booking
+            </Typography>
+
+            <TextField
+              fullWidth
+              label="Available Points"
+              defaultValue="25,000"
+              sx={{ mb: 2 }}
+              {...register("availablePoints")}
+            />
+
+            <TextField
+              fullWidth
+              label="Points to Use"
+              defaultValue="5,000"
+              sx={{ mb: 2 }}
+              {...register("pointsToUse")}
+            />
+
+            <TextField
+              fullWidth
+              label="Points Value"
+              defaultValue="$50.00"
+              sx={{ mb: 3 }}
+              {...register("pointsValue")}
+            />
+
+            {/* Pay with PayPal Section */}
+            <Typography variant="h6" fontWeight="bold" mb={2} sx={{ mt: 4 }}>
+              Pay with PayPal
+            </Typography>
+            <Typography variant="body2" mb={3} color="text.secondary">
+              Fast and secure payment with PayPal
+            </Typography>
+
+            <Box sx={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: 2, 
+              mb: 3,
+              p: 2,
+              border: "1px solid #e0e0e0",
+              borderRadius: 1,
+              backgroundColor: "#fafbfc"
+            }}>
+              <Box sx={{ 
+                width: 40, 
+                height: 40, 
+                backgroundColor: "#0070ba", 
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}>
+                <Typography sx={{ color: "white", fontSize: "1.2rem" }}>P</Typography>
+              </Box>
+              <Box>
+                <Typography variant="body1" fontWeight={500}>
+                  PayPal
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Pay with your PayPal account
+                </Typography>
+              </Box>
+            </Box>
+
             <Button onClick={handlePay} variant="contained" fullWidth sx={{ py: 1.5 }}>
               PAY NOW
             </Button>
