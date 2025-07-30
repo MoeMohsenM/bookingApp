@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../network/axios";
 import { useSearchParams } from "react-router-dom";
 import Styles from "../styles/HotelSearchPage.module.scss";
+import HotelSearchCard from "../components/HotelSearchCard";
+
 export default function SearchPage() {
   const [searchParams] = useSearchParams();
   const [hotels, setHotels] = useState([]);
@@ -34,20 +36,17 @@ export default function SearchPage() {
 
       {hotels.length === 0 ? (
         <div className={Styles.noResults}>
-          
-        <figure>
-          <img src="../../public/images/noresults.svg" alt="" />
-        </figure>
-        <h2 style={{ marginTop: "1rem", color: "black" }}>No results found.</h2>
+          <figure>
+            <img src="../../public/images/noresults.svg" alt="" />
+          </figure>
+          <h2 style={{ marginTop: "1rem", color: "black" }}>No results found.</h2>
         </div>
       ) : (
-        <ul>
+        <div className={Styles.cardGrid}>
           {hotels.map((hotel) => (
-            <li key={hotel.id}>
-              {hotel.name} - {hotel.address.city} ({hotel.address.country})
-            </li>
+            <HotelSearchCard key={hotel.id} hotel={hotel} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
