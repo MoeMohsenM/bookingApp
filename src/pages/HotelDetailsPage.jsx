@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { chooseHotel } from "../features/Hotel/HotelSlice";
 import { useNavigate } from "react-router-dom";
-
+import Styles from "../styles/HotelDetailsPage.module.scss"
 function HotelDetailsPage() {
   const hotel = useSelector((state) => state.hotel);
   const user = useSelector((state) => state.user);
@@ -18,7 +18,10 @@ function HotelDetailsPage() {
   }
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div style={{ padding: "2rem" }} className={Styles.container}>
+            <div className={Styles.path}>
+              <span><strong>Hotel Details</strong></span>| Hotel  <span className={Styles.blue}> : Details</span>
+              </div>
       <h1>{hotel.hotelName}</h1>
       <img
         src={hotel.images?.main}

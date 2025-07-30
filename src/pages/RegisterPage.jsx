@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { createNewUser } from "../features/User/UserSlice";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../network/axios";
 import Styles from "../styles/LoginPage.module.scss";
 
 function RegisterPage() {
@@ -20,12 +20,13 @@ function RegisterPage() {
     const { fullName, email, country, phone, password } = data;
 
     try {
-      await axios.post("http://localhost:8000/users", {
+      await axiosInstance.post("http://localhost:8000/users", {
         fullName,
         email,
         country,
         phone,
         password,
+        bookings: [],
       });
 
       dispatch(createNewUser(fullName, email, country, phone));

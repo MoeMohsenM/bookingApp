@@ -14,12 +14,14 @@ const HotelSummaryCard = ({ hotel }) => {
     checkOutDate,
   } = hotel;
 
-  const displayPrice = pricing[0]; // Assume single room is displayed
+  const displayPrice = Array.isArray(pricing) && pricing.length > 0 ? pricing[0] : null;
+
   const formattedCheckIn = new Date(checkInDate).toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
   });
+
   const formattedCheckOut = new Date(checkOutDate).toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
@@ -27,107 +29,76 @@ const HotelSummaryCard = ({ hotel }) => {
   });
 
   return (
-    <div style={styles.card}>
-      <img src={images.main} alt={name} style={styles.image} />
-      <div style={styles.details}>
-        <div style={styles.titleSection}>
-          <h3 style={styles.title}>{name}</h3>
-          <span style={styles.location}>
+    <div
+      style={{
+        display: "flex",
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        overflow: "hidden",
+        marginBottom: "16px",
+        position: "relative",
+        width:"100%",
+        backgroundColor: "#fff",
+      }}
+    >
+      <img
+        src={images.main}
+        alt={name}
+        style={{
+          width: "250px",
+          objectFit: "cover",
+        }}
+      />
+
+      <div style={{ padding: "16px", flex: 1 }}>
+        <div style={{ marginBottom: "8px" }}>
+          <h3 style={{ margin: 0, fontSize: "18px" }}>{name}</h3>
+          <span style={{ fontWeight: "bold", color: "#444" }}>
             {address.city}, {address.country}
           </span>
-          <p style={styles.address}>Near {address.street}</p>
+          <p style={{ fontSize: "14px", color: "#666" }}>Near {address.street}</p>
         </div>
 
-        <div style={styles.amenities}>
+        <div style={{ display: "flex", gap: "12px", margin: "8px 0" }}>
           {amenities.includes("Parking") && <FaParking />}
           {amenities.includes("Wifi") && <FaWifi />}
         </div>
 
-        <p style={styles.discount}>
-          {displayPrice.discount}{" "}
-          <strong style={styles.price}>${displayPrice.discountedPrice}</strong>
-        </p>
+        {displayPrice ? (
+          <p style={{ color: "#E08A00", fontSize: "14px" }}>
+            {displayPrice.discount}{" "}
+            <strong style={{ color: "#000", fontSize: "18px", marginLeft: "8px" }}>
+              ${displayPrice.discountedPrice}
+            </strong>
+          </p>
+        ) : (
+          <p style={{ color: "#999", fontSize: "14px" }}>Price not available</p>
+        )}
 
-        <div style={styles.footer}>
-          <span>From: 📅 {formattedCheckIn}</span> |
-          <span> To: 📅 {formattedCheckOut}</span>
+        <div style={{ fontSize: "13px", marginTop: "8px", color: "#333" }}>
+          <span>From: 📅 {formattedCheckIn}</span> | <span>To: 📅 {formattedCheckOut}</span>
         </div>
       </div>
 
-      <div style={styles.rating}>
-        <span style={styles.ratingValue}>{rating.score}</span>
+      <div
+        style={{
+          position: "absolute",
+          right: "12px",
+          top: "12px",
+          backgroundColor: "#0A58CA",
+          color: "white",
+          borderRadius: "20px",
+          padding: "4px 10px",
+          display: "flex",
+          alignItems: "center",
+          fontWeight: "bold",
+        }}
+      >
+        <span style={{ marginRight: "4px" }}>{rating.score}</span>
         <MdStar color="white" />
       </div>
     </div>
   );
-};
-
-const styles = {
-  card: {
-    display: "flex",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    overflow: "hidden",
-    marginBottom: "16px",
-    position: "relative",
-  },
-  image: {
-    width: "250px",
-    objectFit: "cover",
-  },
-  details: {
-    padding: "16px",
-    flex: 1,
-  },
-  titleSection: {
-    marginBottom: "8px",
-  },
-  title: {
-    margin: 0,
-    fontSize: "18px",
-  },
-  location: {
-    fontWeight: "bold",
-    color: "#444",
-  },
-  address: {
-    fontSize: "14px",
-    color: "#666",
-  },
-  amenities: {
-    display: "flex",
-    gap: "12px",
-    margin: "8px 0",
-  },
-  discount: {
-    color: "#E08A00",
-    fontSize: "14px",
-  },
-  price: {
-    color: "#000",
-    fontSize: "18px",
-    marginLeft: "8px",
-  },
-  footer: {
-    fontSize: "13px",
-    marginTop: "8px",
-    color: "#333",
-  },
-  rating: {
-    position: "absolute",
-    right: "12px",
-    top: "12px",
-    backgroundColor: "#0A58CA",
-    color: "white",
-    borderRadius: "20px",
-    padding: "4px 10px",
-    display: "flex",
-    alignItems: "center",
-    fontWeight: "bold",
-  },
-  ratingValue: {
-    marginRight: "4px",
-  },
 };
 
 export default HotelSummaryCard;

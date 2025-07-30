@@ -16,7 +16,6 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          {/* ✅ Routes that use the shared Layout */}
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/booking" element={<HotelBookingOverviewPage />} />
@@ -25,7 +24,6 @@ function App() {
             <Route path="/summary" element={<Summary />} />
           </Route>
 
-          {/* ❌ Routes that skip Layout */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>

@@ -1,31 +1,7 @@
-// import React, { useEffect, useState } from "react";
-// import axiosInstance from "../network/axios";
-
-// export default function SearchPage() {
-//   const [hotels, setHotels] = useState([]);
-
-//   useEffect(() => {
-//     axiosInstance.get("/hotels").then((res) => setHotels(res.data));
-//   }, []);
-
-//   return (
-//     <div>
-//       <h2>All Hotels</h2>
-//       <ul>
-//         {hotels.map((hotel) => (
-//           <li key={hotel.id}>
-//             {hotel.name} - {hotel.city} ({hotel.country})
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
-
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../network/axios";
 import { useSearchParams } from "react-router-dom";
-
+import Styles from "../styles/HotelSearchPage.module.scss"
 export default function SearchPage() {
   const [searchParams] = useSearchParams();
   const [hotels, setHotels] = useState([]);
@@ -46,7 +22,10 @@ export default function SearchPage() {
   }, [country]);
 
   return (
-    <div>
+    <div className={Styles.container}>
+      <div className={Styles.path}>
+        <span><strong>Hotels</strong></span> | Total :<span className={Styles.blue}> {hotels.length} result</span>
+        </div>
       <h2>Hotels in {country || "All Countries"}</h2>
       <ul>
         {hotels.map((hotel) => (

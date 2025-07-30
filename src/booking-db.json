@@ -2,12 +2,12 @@
   "users": [
     {
       "id": "b243",
-      "fullName": "asd mohsen",
+      "fullName": "mohamed mohsen",
       "email": "asd@asd.com",
       "country": "asd",
       "phone": "213",
       "password": "asd123@A",
-      "bookings":[]
+      "bookings": []
     }
   ],
   "hotels": [

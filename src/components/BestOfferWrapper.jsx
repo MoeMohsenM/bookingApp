@@ -13,21 +13,42 @@ export default function BestOffersWrapper() {
   }, []);
 
   return (
-    <Box sx={{ padding: "2rem" }}>
-      <Typography variant="h5" fontWeight="bold" mb={2}>
-        Best Offers
-      </Typography>
+   <Box
+  sx={{
+    width: "68.75rem", // increased from 62.5rem (1100px)
+    height: "26rem",   // increased from 26.4375rem (~448px)
+    bgcolor: "#f9f9f9",
+    borderRadius: 2,
+    p: "2rem",
+    boxSizing: "border-box",
+    marginLeft: "200px",
+    marginBottom: "50px",
+  }}
+>
+  <Typography variant="h5" fontWeight="bold" mb={2}>
+    Best Offers
+  </Typography>
 
-      <Box sx={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
-        {offers.map((offer) => (
-          <BestOfferItem
-            key={offer.id}
-            name={offer.name}
-            location={offer.location}
-            image={offer.image}
-          />
-        ))}
+  <Box
+    sx={{
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "1.5rem",
+    }}
+  >
+    {offers.map((offer) => (
+      <Box
+        key={offer.id}
+        sx={{
+          flex: "1 1 calc(33.333% - 1rem)",
+          minWidth: "20rem", // increased from 17.8125rem (320px)
+        }}
+      >
+        <BestOfferItem hotel={offer} />
       </Box>
-    </Box>
+    ))}
+  </Box>
+</Box>
+
   );
 }
