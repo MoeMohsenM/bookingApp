@@ -15,9 +15,9 @@ export default function BestOffersWrapper() {
   return (
    <Box
   sx={{
-    width: "68.75rem", // increased from 62.5rem (1100px)
-    height: "26rem",   // increased from 26.4375rem (~448px)
-    bgcolor: "#f9f9f9",
+    width: "68.75rem", 
+    height: "26rem",   
+    bgcolor: "white",
     borderRadius: 2,
     p: "2rem",
     boxSizing: "border-box",

@@ -91,7 +91,7 @@ const Sidebar = () => {
           </NavLink>
 
           {isLoggedIn && (
-            <NavLink to="my-booking" style={{ textDecoration: "none" }}>
+            <NavLink to="summary" style={{ textDecoration: "none" }}>
               <ListItem
                 sx={{
                   cursor: "pointer",

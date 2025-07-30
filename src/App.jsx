@@ -9,6 +9,8 @@ const HotelSearchPage = lazy(() => import("./pages/HotelSearchPage"));
 const HotelBookingOverviewPage = lazy(() =>
   import("./pages/HotelBookingOverviewPage")
 );
+
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const Summary = lazy(() => import("./pages/MyBookingsPage"));
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
             <Route path="/search" element={<HotelSearchPage />} />
             <Route path="/hotel/:id" element={<HotelDetailsPage />} />
             <Route path="/summary" element={<Summary />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
 
           <Route path="/login" element={<LoginPage />} />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../network/axios";
 import { useSearchParams } from "react-router-dom";
-import Styles from "../styles/HotelSearchPage.module.scss"
+import Styles from "../styles/HotelSearchPage.module.scss";
 export default function SearchPage() {
   const [searchParams] = useSearchParams();
   const [hotels, setHotels] = useState([]);
@@ -12,10 +12,12 @@ export default function SearchPage() {
     axiosInstance.get("/hotels").then((res) => {
       const allHotels = res.data;
 
-      const filtered = country
-        ? allHotels.filter((hotel) => hotel.address.countryIsoCode
- === country)
-        : allHotels;
+      const filtered =
+        country && country.trim() !== ""
+          ? allHotels.filter(
+              (hotel) => hotel.address.countryIsoCode === country
+            )
+          : [];
 
       setHotels(filtered);
     });
@@ -24,16 +26,29 @@ export default function SearchPage() {
   return (
     <div className={Styles.container}>
       <div className={Styles.path}>
-        <span><strong>Hotels</strong></span> | Total :<span className={Styles.blue}> {hotels.length} result</span>
+        <span>
+          <strong>Hotels</strong>
+        </span>{" "}
+        | Total :<span className={Styles.blue}> {hotels.length} result</span>
+      </div>
+
+      {hotels.length === 0 ? (
+        <div className={Styles.noResults}>
+          
+        <figure>
+          <img src="../../public/images/noresults.svg" alt="" />
+        </figure>
+        <h2 style={{ marginTop: "1rem", color: "black" }}>No results found.</h2>
         </div>
-      <h2>Hotels in {country || "All Countries"}</h2>
-      <ul>
-        {hotels.map((hotel) => (
-          <li key={hotel.id}>
-            {hotel.name} - {hotel.address.city} ({hotel.address.country})
-          </li>
-        ))}
-      </ul>
+      ) : (
+        <ul>
+          {hotels.map((hotel) => (
+            <li key={hotel.id}>
+              {hotel.name} - {hotel.address.city} ({hotel.address.country})
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

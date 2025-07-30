@@ -10,18 +10,23 @@ import {
 import Styles from "../styles/SearchBar.module.scss";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { chooseHotel } from "../features/Hotel/HotelSlice";
 
 
 export default function SearchForm() {
   const [search, setSearch] = useState("");
   const [country, setCountry] = useState("");
   const [checkIn, setCheckIn] = useState("");
+  const dispatch = useDispatch();
 
   
 // inside your component:
 const navigate = useNavigate();
 
 const handleSearch = () => {
+  // Save check-in date to Redux hotel state (for both checkInDate and checkOutDate)
+  dispatch(chooseHotel({ checkInDate: checkIn, checkOutDate: checkIn }));
   const params = new URLSearchParams({
     query: search,
     country,

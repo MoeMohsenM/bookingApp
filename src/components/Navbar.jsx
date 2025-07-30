@@ -30,13 +30,13 @@ export const Navbar = () => {
 
       <ul className={Styles.nav__icons}>
         <li>
-          <Link to="/hotels">
+          <Link to="/">
             <MdHotel size={24} />
             <p>HOTEL</p>
           </Link>
         </li>
         <li>
-          <Link to="/">
+          <Link to="/villas">
             <IoHomeSharp size={24} />
             <p>VILLA</p>
           </Link>

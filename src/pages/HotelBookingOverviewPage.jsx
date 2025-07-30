@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Box,
@@ -10,23 +10,39 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { bookHotel } from "../features/User/UserSlice";
 import Styles from "../styles/HotelBookingOverviewPage.module.scss";
+import SuccessModal from "../components/SuccessModal"; // ✅ Make sure path is correct
+
+function formatDate(dateStr) {
+  if (!dateStr) return "-";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    weekday: "long",
+  });
+}
 
 export default function HotelBookingOverviewPage() {
   const { register, handleSubmit } = useForm();
+  const [showModal, setShowModal] = useState(false); // ✅ Modal state
   const hotel = useSelector((state) => state.hotel);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  console.log("User Data:", user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handlePay() {
     dispatch(bookHotel(hotel));
-    navigate("/summary");
+    setShowModal(true); // ✅ Show modal on pay
+  }
+
+  function handleModalClose() {
+    setShowModal(false);
+    navigate("/summary"); // ✅ Optional: redirect after closing modal
   }
 
   const onSubmit = (data) => {
@@ -35,6 +51,7 @@ export default function HotelBookingOverviewPage() {
 
   return (
     <div className={Styles.container}>
+      {showModal && <SuccessModal onClose={handleModalClose} />} {/* ✅ Modal */}
       <div
         style={{
           width: "90%",
@@ -55,25 +72,18 @@ export default function HotelBookingOverviewPage() {
           <strong>Booking</strong>
         </span>
         | Hotels : Hotel Detail :
-        <span
-          style={{
-            color: "rgba(10, 106, 218, 1)",
-          }}
-        >
-          Booking
-        </span>
+        <span style={{ color: "rgba(10, 106, 218, 1)" }}>Booking</span>
       </div>
+
       <div className={Styles.content}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 4 }}>
-            {/* Your Details */}
+            {/* Form fields */}
             <Typography variant="h6" fontWeight="bold" mb={2}>
               Your Details
             </Typography>
             <Typography variant="body2" mb={3}>
-              Whether you are in town for business or leisure, San Francisco
-              Marriott Marquis welcomes travelers to Northern California with
-              exceptional service, spacious...
+              Whether you are in town for business or leisure...
             </Typography>
 
             <Box display="flex" gap={2} mb={2}>
@@ -85,19 +95,16 @@ export default function HotelBookingOverviewPage() {
                   <MenuItem value="Mrs">Mrs</MenuItem>
                 </Select>
               </FormControl>
-
               <TextField
                 fullWidth
                 label="First Name"
                 defaultValue={user.fullName.split(" ")[0]}
                 {...register("firstName")}
               />
-
               <TextField
                 fullWidth
                 label="Last Name"
                 defaultValue={user.fullName.split(" ")[1]}
-                placeholder="Enter your last name"
                 {...register("lastName")}
               />
             </Box>
@@ -113,17 +120,12 @@ export default function HotelBookingOverviewPage() {
             <Box display="flex" gap={2} mb={4}>
               <FormControl fullWidth>
                 <InputLabel>Country</InputLabel>
-                <Select
-                  {...register("country")}
-                  defaultValue="Egypt"
-                  label="Country"
-                >
+                <Select {...register("country")} defaultValue="Egypt" label="Country">
                   <MenuItem value="Egypt">Egypt</MenuItem>
                   <MenuItem value="USA">USA</MenuItem>
                   <MenuItem value="Germany">Germany</MenuItem>
                 </Select>
               </FormControl>
-
               <TextField
                 fullWidth
                 label="Mobile"
@@ -145,18 +147,8 @@ export default function HotelBookingOverviewPage() {
             />
 
             <Box display="flex" gap={2} mb={2}>
-              <TextField
-                fullWidth
-                label="CVV"
-                defaultValue="123"
-                {...register("cvv")}
-              />
-              <TextField
-                fullWidth
-                label="Expiry Date"
-                defaultValue="8/8/2030"
-                {...register("expiry")}
-              />
+              <TextField fullWidth label="CVV" defaultValue="123" {...register("cvv")} />
+              <TextField fullWidth label="Expiry Date" defaultValue="8/8/2030" {...register("expiry")} />
             </Box>
 
             <TextField
@@ -167,85 +159,85 @@ export default function HotelBookingOverviewPage() {
               {...register("cardHolder")}
             />
 
-            <Button
-              onClick={handlePay}
-              variant="contained"
-              fullWidth
-              type="submit"
-              sx={{ py: 1.5 }}
-            >
+            <Button onClick={handlePay} variant="contained" fullWidth sx={{ py: 1.5 }}>
               PAY NOW
             </Button>
           </Box>
         </form>
-          <div className={Styles.summary__card}>
-            <h2 className={Styles.summary__title}>Summary</h2>
-            <figure className={Styles.image__wrapper}>
-              <img
-                src={hotel?.images?.main}
-                alt={hotel?.name || "Hotel image"}
-              />
-            </figure>
-            <div className={Styles.summary__main}>
-              <div className={Styles.summary__hotel}>
-                <div>
-                  <h3 className={Styles.hotel__name}>{hotel?.name}</h3>
-                  <div className={Styles.hotel__address}>
-                    <span className={Styles.location__icon}>📍</span>
-                    <span>
-                      {hotel?.address?.street}, {hotel?.address?.city}, {hotel?.address?.country}
-                    </span>
-                  </div>
-                </div>
-                <div className={Styles.price__block}>
-                  {hotel?.pricing?.[0]?.discount && (
-                    <span className={Styles.discount}>{hotel.pricing[0].discount}% OFF</span>
-                  )}
-                  <span className={Styles.price}>{hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice}</span>
-                  <span className={Styles.currency}>{hotel?.pricing?.[0]?.currency}</span>
-                  <span className={Styles.pernight}>Per night</span>
+
+        {/* Booking Summary */}
+        <div className={Styles.summary__card}>
+          <h2 className={Styles.summary__title}>Summary</h2>
+          <figure className={Styles.image__wrapper}>
+            <img src={hotel?.images?.main} alt={hotel?.name || "Hotel image"} />
+          </figure>
+          <div className={Styles.summary__main}>
+            <div className={Styles.summary__hotel}>
+              <div>
+                <h3 className={Styles.hotel__name}>{hotel?.name}</h3>
+                <div className={Styles.hotel__address}>
+                  <span className={Styles.location__icon}>📍</span>
+                  <span>
+                    {hotel?.address?.street}, {hotel?.address?.city}, {hotel?.address?.country}
+                  </span>
                 </div>
               </div>
-              <div className={Styles.dates}>
-                <label>Check In</label>
-                <input value={hotel?.checkInDate || "-"} readOnly />
-                <label>Check Out</label>
-                <input value={hotel?.checkOutDate || "-"} readOnly />
+              <div className={Styles.price__block}>
+                {hotel?.pricing?.[0]?.discount && (
+                  <span className={Styles.discount}>
+                    {hotel.pricing[0].discount}% OFF
+                  </span>
+                )}
+                <span className={Styles.price}>
+                  {hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice}
+                </span>
+                <span className={Styles.currency}>{hotel?.pricing?.[0]?.currency}</span>
+                <span className={Styles.pernight}>Per night</span>
               </div>
-              <div className={Styles.price__summary}>
-                <div>
-                  <span>Price Per Night</span>
-                  <span>${hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice}</span>
-                </div>
-                <div>
-                  <span>Nights</span>
-                  <span>{(() => {
-                    const checkIn = new Date(hotel?.checkInDate);
-                    const checkOut = new Date(hotel?.checkOutDate);
-                    if (hotel?.checkInDate && hotel?.checkOutDate && !isNaN(checkIn) && !isNaN(checkOut)) {
-                      const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
-                      return diff > 0 ? diff : 1;
-                    }
-                    return 1;
-                  })()}</span>
-                </div>
-                <div className={Styles.total__row}>
-                  <span>Total Price</span>
-                  <span>{(() => {
-                    const price = hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice || 0;
-                    const checkIn = new Date(hotel?.checkInDate);
-                    const checkOut = new Date(hotel?.checkOutDate);
-                    let nights = 1;
-                    if (hotel?.checkInDate && hotel?.checkOutDate && !isNaN(checkIn) && !isNaN(checkOut)) {
-                      const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
-                      nights = diff > 0 ? diff : 1;
-                    }
-                    return `$${price * nights}`;
-                  })()}</span>
-                </div>
+            </div>
+
+            <div className={Styles.dates}>
+              <label>Check In</label>
+              <input value={formatDate(hotel?.checkInDate)} readOnly />
+              <label>Check Out</label>
+              <input value={formatDate(hotel?.checkOutDate)} readOnly />
+            </div>
+
+            <div className={Styles.price__summary}>
+              <div>
+                <span>Price Per Night</span>
+                <span>${hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice}</span>
+              </div>
+              <div>
+                <span>Nights</span>
+                <span>{(() => {
+                  const checkIn = new Date(hotel?.checkInDate);
+                  const checkOut = new Date(hotel?.checkOutDate);
+                  if (checkIn && checkOut && !isNaN(checkIn) && !isNaN(checkOut)) {
+                    const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+                    return diff > 0 ? diff : 1;
+                  }
+                  return 1;
+                })()}</span>
+              </div>
+              <div className={Styles.total__row}>
+                <span>Total Price</span>
+                <span>{(() => {
+                  const price =
+                    hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice || 0;
+                  const checkIn = new Date(hotel?.checkInDate);
+                  const checkOut = new Date(hotel?.checkOutDate);
+                  let nights = 1;
+                  if (checkIn && checkOut && !isNaN(checkIn) && !isNaN(checkOut)) {
+                    const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+                    nights = diff > 0 ? diff : 1;
+                  }
+                  return `$${price * nights}`;
+                })()}</span>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
   );
