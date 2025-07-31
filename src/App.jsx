@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 const HomePage = lazy(() => import("./pages/HomePage"));
 const HotelDetailsPage = lazy(() => import("./pages/HotelDetailsPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
@@ -9,7 +11,6 @@ const HotelSearchPage = lazy(() => import("./pages/HotelSearchPage"));
 const HotelBookingOverviewPage = lazy(() =>
   import("./pages/HotelBookingOverviewPage")
 );
-
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const Summary = lazy(() => import("./pages/MyBookingsPage"));
 
@@ -23,7 +24,14 @@ function App() {
             <Route path="/booking" element={<HotelBookingOverviewPage />} />
             <Route path="/search" element={<HotelSearchPage />} />
             <Route path="/hotel/:id" element={<HotelDetailsPage />} />
-            <Route path="/summary" element={<Summary />} />
+            <Route
+              path="/summary"
+              element={
+                <ProtectedRoute>
+                  <Summary />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 
