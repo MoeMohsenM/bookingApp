@@ -18,3 +18,51 @@
 .slider{
   margin-left:10rem;
 }
+
+.mainBg {
+  min-height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background: linear-gradient(120deg, #e0e7ff 0%, #f7f7fa 100%);
+  filter: blur(2px);
+  opacity: 0.7;
+}
+
+.mainCard {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(10, 88, 202, 0.13), 0 1.5px 8px rgba(0,0,0,0.07);
+  padding: 2.5rem 2rem;
+  animation: fadeInCard 0.7s cubic-bezier(.39,.575,.565,1) both;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.mainCard:hover {
+  box-shadow: 0 16px 48px rgba(10, 88, 202, 0.18), 0 2px 12px rgba(0,0,0,0.10);
+  transform: translateY(-2px) scale(1.01);
+}
+
+@keyframes fadeInCard {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .mainCard {
+    padding: 1.2rem 0.5rem;
+    border-radius: 16px;
+  }
+}

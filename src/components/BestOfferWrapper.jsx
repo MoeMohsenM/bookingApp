@@ -13,42 +13,41 @@ export default function BestOffersWrapper() {
   }, []);
 
   return (
-   <Box
-  sx={{
-    width: "68.75rem", 
-    height: "26rem",   
-    bgcolor: "white",
-    borderRadius: 2,
-    p: "2rem",
-    boxSizing: "border-box",
-    marginLeft: "200px",
-    marginBottom: "50px",
-  }}
->
-  <Typography variant="h5" fontWeight="bold" mb={2}>
-    Best Offers
-  </Typography>
+    <Box
+      sx={{
+        width: "68.75rem",
+        height: "26rem",
+        bgcolor: "white",
+        borderRadius: 2,
+        p: "2rem",
+        boxSizing: "border-box",
+        marginLeft: "200px",
+        marginBottom: "50px",
+      }}
+    >
+      <Typography variant="h5" fontWeight="bold" mb={2}>
+        Best Offers
+      </Typography>
 
-  <Box
-    sx={{
-      display: "flex",
-      flexWrap: "wrap",
-      gap: "1.5rem",
-    }}
-  >
-    {offers.map((offer) => (
       <Box
-        key={offer.id}
         sx={{
-          flex: "1 1 calc(33.333% - 1rem)",
-          minWidth: "20rem", // increased from 17.8125rem (320px)
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "1.5rem",
         }}
       >
-        <BestOfferItem hotel={offer} />
+        {offers.map((offer) => (
+          <Box
+            key={offer.id}
+            sx={{
+              flex: "1 1 calc(33.333% - 1rem)",
+              minWidth: "20rem", // increased from 17.8125rem (320px)
+            }}
+          >
+            <BestOfferItem hotel={offer} />
+          </Box>
+        ))}
       </Box>
-    ))}
-  </Box>
-</Box>
-
+    </Box>
   );
 }
