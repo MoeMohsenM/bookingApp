@@ -162,30 +162,6 @@ export default function HotelBookingOverviewPage() {
               {...register("cardHolder")}
             />
 
-            {/* Apple Pay */}
-            <Typography variant="h6" fontWeight="bold" mb={2} sx={{ mt: 4 }}>
-              Pay with Apple Pay
-            </Typography>
-            <Typography variant="body2" mb={3} color="text.secondary">
-              Quick and secure payment with Apple Pay
-            </Typography>
-
-            <Box className={Styles.paymentOption}>
-              <Box className={Styles.appleIcon}>
-                <Typography sx={{ color: "white", fontSize: "1.2rem" }}>
-                  🍎
-                </Typography>
-              </Box>
-              <Box>
-                <Typography variant="body1" fontWeight={500}>
-                  Apple Pay
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Touch ID or Face ID to pay
-                </Typography>
-              </Box>
-            </Box>
-
             {/* Points */}
             <Typography variant="h6" fontWeight="bold" mb={2} sx={{ mt: 4 }}>
               Pay with Points

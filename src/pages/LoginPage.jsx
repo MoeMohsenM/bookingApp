@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../features/User/UserSlice";
 import { useNavigate } from "react-router-dom";
 import Styles from "../styles/LoginPage.module.scss";
@@ -26,7 +26,16 @@ function LoginPage() {
       );
 
       if (user && user.password === data.password) {
-        dispatch(login(user));
+        dispatch(
+          login({
+            id: user.id,
+            fullName: user.fullName,
+            email: user.email,
+            country: user.country,
+            phone: user.phone,
+            bookings: user.bookings || [],
+          })
+        );
         navigate("/");
       } else {
         alert("Invalid credentials");
@@ -36,7 +45,6 @@ function LoginPage() {
       alert("Error connecting to server.");
     }
   };
-
 
   return (
     <div className={Styles.login__wrapper}>

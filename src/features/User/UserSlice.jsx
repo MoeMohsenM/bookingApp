@@ -52,25 +52,37 @@ const userSlice = createSlice({
       );
     },
 
-    login(state, action) {
-      const { fullName, email, country, phone } = action.payload;
-      state.fullName = fullName;
-      state.email = email;
-      state.country = country;
-      state.phone = phone;
-      state.isAuthenticated = true;
+login(state, action) {
+  const {
+    id,
+    fullName,
+    email,
+    country,
+    phone,
+    bookings = [],
+  } = action.payload;
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          fullName,
-          email,
-          country,
-          phone,
-          bookings: state.bookings,
-        })
-      );
-    },
+  state.id = id;
+  state.fullName = fullName;
+  state.email = email;
+  state.country = country;
+  state.phone = phone;
+  state.bookings = bookings; // ensure bookings are included
+  state.isAuthenticated = true;
+
+  localStorage.setItem(
+    "user",
+    JSON.stringify({
+      id,
+      fullName,
+      email,
+      country,
+      phone,
+      bookings,
+    })
+  );
+}
+,
 
     logout(state) {
       state.fullName = "";
