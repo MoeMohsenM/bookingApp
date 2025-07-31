@@ -9,21 +9,19 @@ export default function SearchPage() {
   const [hotels, setHotels] = useState([]);
 
   const country = searchParams.get("country");
+  const query = searchParams.get("query")?.toLowerCase() || "";
 
   useEffect(() => {
     axiosInstance.get("/hotels").then((res) => {
       const allHotels = res.data;
-
-      const filtered =
-        country && country.trim() !== ""
-          ? allHotels.filter(
-              (hotel) => hotel.address.countryIsoCode === country
-            )
-          : [];
-
+      const filtered = allHotels.filter((hotel) => {
+        const matchesCountry = country && country.trim() !== "" ? hotel.address.countryIsoCode === country : true;
+        const matchesName = query ? hotel.name?.toLowerCase().includes(query) : true;
+        return matchesCountry && matchesName;
+      });
       setHotels(filtered);
     });
-  }, [country]);
+  }, [country, query]);
 
   return (
     <div className={Styles.container}>
