@@ -38,9 +38,22 @@ const hotelSlice = createSlice({
         state.checkInDate = action.payload.checkInDate;
         state.checkOutDate = action.payload.checkOutDate;
       }
+    },
+
+    updateCheckInDate(state, action) {
+      state.checkInDate = action.payload;
+    },
+    updateCheckOutDate(state, action) {
+      state.checkOutDate = action.payload;
     }
   }
 });
 
-export const { chooseHotel, bookHotel } = hotelSlice.actions;
+export const {
+  chooseHotel,
+  bookHotel,
+  updateCheckInDate,
+  updateCheckOutDate
+} = hotelSlice.actions;
+
 export default hotelSlice.reducer;

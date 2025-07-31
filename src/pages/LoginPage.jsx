@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { login } from "../features/User/UserSlice";
 import { useNavigate } from "react-router-dom";
 import Styles from "../styles/LoginPage.module.scss";
 import { Link } from "react-router-dom";
-import axiosInstance from "../network/axios"; // your axios instance
+import axiosInstance from "../network/axios";
 
 function LoginPage() {
   const {
@@ -13,7 +13,6 @@ function LoginPage() {
     formState: { errors },
   } = useForm();
 
-  // const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,10 +22,10 @@ function LoginPage() {
         params: { email: data.email },
       });
 
-      const user = res.data[0]; // assuming email is unique
+      const user = res.data[0]; 
 
       if (user && user.password === data.password) {
-        dispatch(login(user)); // pass user info to Redux if needed
+        dispatch(login(user)); 
         navigate("/");
       } else {
         alert("Invalid credentials");
@@ -41,7 +40,7 @@ function LoginPage() {
     <div className={Styles.login__wrapper}>
       <div className={Styles.container}>
         <figure className={Styles.image__wrapper}>
-          <img src="../../public/images/Vector.svg" alt="" />
+          <img src="/images/Vector.svg" alt="" />
         </figure>
 
         <h3>LOGIN</h3>
@@ -108,7 +107,7 @@ function LoginPage() {
       </div>
 
       <figure className={Styles.bg__wrapper}>
-        <img src="../../public/images/BG.png" alt="" />
+        <img src="/images/BG.png" alt="" />
       </figure>
     </div>
   );

@@ -42,7 +42,7 @@ function RegisterPage() {
     <div className={Styles.login__wrapper}>
       <div className={Styles.container}>
         <figure className={Styles.image__wrapper}>
-          <img src="../../public/images/Vector.svg" alt="" />
+          <img src="/images/Vector.svg" alt="" />
         </figure>
         <h3>REGISTER</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -150,7 +150,7 @@ function RegisterPage() {
         </div>
       </div>
       <figure className={Styles.bg__wrapper}>
-        <img src="../../public/images/BG.png" alt="" />
+        <img src="/images/BG.png" alt="" />
       </figure>
     </div>
   );

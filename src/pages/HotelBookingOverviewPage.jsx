@@ -14,36 +14,36 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { bookHotel } from "../features/User/UserSlice";
 import Styles from "../styles/HotelBookingOverviewPage.module.scss";
-import SuccessModal from "../components/SuccessModal"; // ✅ Make sure path is correct
+import SuccessModal from "../components/SuccessModal";
+import {
+  updateCheckInDate,
+  updateCheckOutDate,
+} from "../features/Hotel/HotelSlice";
 
-function formatDate(dateStr) {
-  if (!dateStr) return "-";
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    weekday: "long",
-  });
-}
 
 export default function HotelBookingOverviewPage() {
   const { register, handleSubmit } = useForm();
-  const [showModal, setShowModal] = useState(false); // ✅ Modal state
+  const [showModal, setShowModal] = useState(false);
   const hotel = useSelector((state) => state.hotel);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function handlePay() {
-    dispatch(bookHotel(hotel));
-    setShowModal(true); // ✅ Show modal on pay
-  }
+  const handleDateChange = (e, type) => {
+    const value = e.target.value;
+    if (type === "checkin") dispatch(updateCheckInDate(value));
+    else dispatch(updateCheckOutDate(value));
+  };
 
-  function handleModalClose() {
+  const handlePay = () => {
+    dispatch(bookHotel(hotel));
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
     setShowModal(false);
-    navigate("/summary"); // ✅ Optional: redirect after closing modal
-  }
+    navigate("/summary");
+  };
 
   const onSubmit = (data) => {
     console.log("Form Submitted:", data);
@@ -51,34 +51,20 @@ export default function HotelBookingOverviewPage() {
 
   return (
     <div className={Styles.container}>
-      {showModal && <SuccessModal onClose={handleModalClose} />} {/* ✅ Modal */}
-      <div
-        style={{
-          width: "90%",
-          height: "3.25rem",
-          padding: "0.75rem 1.25rem",
-          backgroundColor: "white",
-          borderRadius: "10px",
-          marginBottom: "1rem",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          fontFamily: "sans-serif",
-          fontSize: "1rem",
-          color: "#333",
-        }}
-      >
+      {showModal && <SuccessModal onClose={handleModalClose} />}
+
+      <div className={Styles.breadcrumb}>
         <span>
           <strong>Booking</strong>
-        </span>
-        | Hotels : Hotel Detail :
+        </span>{" "}
+        | Hotels : Hotel Detail :{" "}
         <span style={{ color: "rgba(10, 106, 218, 1)" }}>Booking</span>
       </div>
 
       <div className={Styles.content}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 4 }}>
-            {/* Form fields */}
+            {/* Personal Details */}
             <Typography variant="h6" fontWeight="bold" mb={2}>
               Your Details
             </Typography>
@@ -98,13 +84,13 @@ export default function HotelBookingOverviewPage() {
               <TextField
                 fullWidth
                 label="First Name"
-                defaultValue={user.fullName.split(" ")[0]}
+                defaultValue={user.fullName?.split(" ")[0] || ""}
                 {...register("firstName")}
               />
               <TextField
                 fullWidth
                 label="Last Name"
-                defaultValue={user.fullName.split(" ")[1]}
+                defaultValue={user.fullName?.split(" ")[1] || ""}
                 {...register("lastName")}
               />
             </Box>
@@ -120,7 +106,11 @@ export default function HotelBookingOverviewPage() {
             <Box display="flex" gap={2} mb={4}>
               <FormControl fullWidth>
                 <InputLabel>Country</InputLabel>
-                <Select {...register("country")} defaultValue="Egypt" label="Country">
+                <Select
+                  {...register("country")}
+                  defaultValue="Egypt"
+                  label="Country"
+                >
                   <MenuItem value="Egypt">Egypt</MenuItem>
                   <MenuItem value="USA">USA</MenuItem>
                   <MenuItem value="Germany">Germany</MenuItem>
@@ -134,6 +124,7 @@ export default function HotelBookingOverviewPage() {
               />
             </Box>
 
+            {/* Payment Details */}
             <Typography variant="h6" fontWeight="bold" mb={2}>
               Payment Details
             </Typography>
@@ -147,8 +138,18 @@ export default function HotelBookingOverviewPage() {
             />
 
             <Box display="flex" gap={2} mb={2}>
-              <TextField fullWidth label="CVV" defaultValue="123" {...register("cvv")} />
-              <TextField fullWidth label="Expiry Date" defaultValue="8/8/2030" {...register("expiry")} />
+              <TextField
+                fullWidth
+                label="CVV"
+                defaultValue="123"
+                {...register("cvv")}
+              />
+              <TextField
+                fullWidth
+                label="Expiry Date"
+                defaultValue="8/8/2030"
+                {...register("expiry")}
+              />
             </Box>
 
             <TextField
@@ -159,7 +160,7 @@ export default function HotelBookingOverviewPage() {
               {...register("cardHolder")}
             />
 
-            {/* Pay with Apple Pay Section */}
+            {/* Apple Pay */}
             <Typography variant="h6" fontWeight="bold" mb={2} sx={{ mt: 4 }}>
               Pay with Apple Pay
             </Typography>
@@ -167,26 +168,11 @@ export default function HotelBookingOverviewPage() {
               Quick and secure payment with Apple Pay
             </Typography>
 
-            <Box sx={{ 
-              display: "flex", 
-              alignItems: "center", 
-              gap: 2, 
-              mb: 3,
-              p: 2,
-              border: "1px solid #e0e0e0",
-              borderRadius: 1,
-              backgroundColor: "#fafbfc"
-            }}>
-              <Box sx={{ 
-                width: 40, 
-                height: 40, 
-                backgroundColor: "#000", 
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-                <Typography sx={{ color: "white", fontSize: "1.2rem" }}>🍎</Typography>
+            <Box className={Styles.paymentOption}>
+              <Box className={Styles.appleIcon}>
+                <Typography sx={{ color: "white", fontSize: "1.2rem" }}>
+                  🍎
+                </Typography>
               </Box>
               <Box>
                 <Typography variant="body1" fontWeight={500}>
@@ -198,7 +184,7 @@ export default function HotelBookingOverviewPage() {
               </Box>
             </Box>
 
-            {/* Pay with Points Section */}
+            {/* Points */}
             <Typography variant="h6" fontWeight="bold" mb={2} sx={{ mt: 4 }}>
               Pay with Points
             </Typography>
@@ -230,7 +216,7 @@ export default function HotelBookingOverviewPage() {
               {...register("pointsValue")}
             />
 
-            {/* Pay with PayPal Section */}
+            {/* PayPal */}
             <Typography variant="h6" fontWeight="bold" mb={2} sx={{ mt: 4 }}>
               Pay with PayPal
             </Typography>
@@ -238,26 +224,11 @@ export default function HotelBookingOverviewPage() {
               Fast and secure payment with PayPal
             </Typography>
 
-            <Box sx={{ 
-              display: "flex", 
-              alignItems: "center", 
-              gap: 2, 
-              mb: 3,
-              p: 2,
-              border: "1px solid #e0e0e0",
-              borderRadius: 1,
-              backgroundColor: "#fafbfc"
-            }}>
-              <Box sx={{ 
-                width: 40, 
-                height: 40, 
-                backgroundColor: "#0070ba", 
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-                <Typography sx={{ color: "white", fontSize: "1.2rem" }}>P</Typography>
+            <Box className={Styles.paymentOption}>
+              <Box className={Styles.paypalIcon}>
+                <Typography sx={{ color: "white", fontSize: "1.2rem" }}>
+                  P
+                </Typography>
               </Box>
               <Box>
                 <Typography variant="body1" fontWeight={500}>
@@ -269,7 +240,12 @@ export default function HotelBookingOverviewPage() {
               </Box>
             </Box>
 
-            <Button onClick={handlePay} variant="contained" fullWidth sx={{ py: 1.5 }}>
+            <Button
+              onClick={handlePay}
+              variant="contained"
+              fullWidth
+              sx={{ py: 1.5 }}
+            >
               PAY NOW
             </Button>
           </Box>
@@ -288,7 +264,8 @@ export default function HotelBookingOverviewPage() {
                 <div className={Styles.hotel__address}>
                   <span className={Styles.location__icon}>📍</span>
                   <span>
-                    {hotel?.address?.street}, {hotel?.address?.city}, {hotel?.address?.country}
+                    {hotel?.address?.street}, {hotel?.address?.city},{" "}
+                    {hotel?.address?.country}
                   </span>
                 </div>
               </div>
@@ -299,51 +276,73 @@ export default function HotelBookingOverviewPage() {
                   </span>
                 )}
                 <span className={Styles.price}>
-                  {hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice}
+                  {hotel?.pricing?.[0]?.discountedPrice ||
+                    hotel?.pricing?.[0]?.originalPrice}
                 </span>
-                <span className={Styles.currency}>{hotel?.pricing?.[0]?.currency}</span>
+                <span className={Styles.currency}>
+                  {hotel?.pricing?.[0]?.currency}
+                </span>
                 <span className={Styles.pernight}>Per night</span>
               </div>
             </div>
 
             <div className={Styles.dates}>
               <label>Check In</label>
-              <input value={formatDate(hotel?.checkInDate)} readOnly />
+              <input
+                type="date"
+                value={hotel?.checkInDate?.slice(0, 10) || ""}
+                onChange={(e) => handleDateChange(e, "checkin")}
+              />
               <label>Check Out</label>
-              <input value={formatDate(hotel?.checkOutDate)} readOnly />
+              <input
+                type="date"
+                min={hotel?.checkInDate?.slice(0, 10)}
+                value={hotel?.checkOutDate?.slice(0, 10) || ""}
+                onChange={(e) => handleDateChange(e, "checkout")}
+              />
             </div>
 
             <div className={Styles.price__summary}>
               <div>
                 <span>Price Per Night</span>
-                <span>${hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice}</span>
+                <span>
+                  $
+                  {hotel?.pricing?.[0]?.discountedPrice ||
+                    hotel?.pricing?.[0]?.originalPrice}
+                </span>
               </div>
               <div>
                 <span>Nights</span>
-                <span>{(() => {
-                  const checkIn = new Date(hotel?.checkInDate);
-                  const checkOut = new Date(hotel?.checkOutDate);
-                  if (checkIn && checkOut && !isNaN(checkIn) && !isNaN(checkOut)) {
-                    const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
-                    return diff > 0 ? diff : 1;
-                  }
-                  return 1;
-                })()}</span>
+                <span>
+                  {(() => {
+                    const checkIn = new Date(hotel?.checkInDate);
+                    const checkOut = new Date(hotel?.checkOutDate);
+                    if (!isNaN(checkIn) && !isNaN(checkOut)) {
+                      const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+                      return diff > 0 ? diff : 1;
+                    }
+                    return 1;
+                  })()}
+                </span>
               </div>
               <div className={Styles.total__row}>
                 <span>Total Price</span>
-                <span>{(() => {
-                  const price =
-                    hotel?.pricing?.[0]?.discountedPrice || hotel?.pricing?.[0]?.originalPrice || 0;
-                  const checkIn = new Date(hotel?.checkInDate);
-                  const checkOut = new Date(hotel?.checkOutDate);
-                  let nights = 1;
-                  if (checkIn && checkOut && !isNaN(checkIn) && !isNaN(checkOut)) {
-                    const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
-                    nights = diff > 0 ? diff : 1;
-                  }
-                  return `$${price * nights}`;
-                })()}</span>
+                <span>
+                  {(() => {
+                    const price =
+                      hotel?.pricing?.[0]?.discountedPrice ||
+                      hotel?.pricing?.[0]?.originalPrice ||
+                      0;
+                    const checkIn = new Date(hotel?.checkInDate);
+                    const checkOut = new Date(hotel?.checkOutDate);
+                    let nights = 1;
+                    if (!isNaN(checkIn) && !isNaN(checkOut)) {
+                      const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+                      nights = diff > 0 ? diff : 1;
+                    }
+                    return `$${price * nights}`;
+                  })()}
+                </span>
               </div>
             </div>
           </div>

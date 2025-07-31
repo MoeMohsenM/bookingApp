@@ -19,11 +19,9 @@ export default function SearchForm() {
   const [checkIn, setCheckIn] = useState("");
   const dispatch = useDispatch();
 
-  // inside your component:
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    // Save check-in date to Redux hotel state (for both checkInDate and checkOutDate)
     dispatch(chooseHotel({ checkInDate: checkIn, checkOutDate: checkIn }));
     const params = new URLSearchParams({
       query: search,

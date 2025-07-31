@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-// import { bookHotel } from "../features/Hotel/HotelSlice";
 import RecommendedHotels from "../components/RecommendedHotels";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";

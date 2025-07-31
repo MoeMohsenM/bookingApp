@@ -149,7 +149,6 @@ const Sidebar = () => {
         </List>
       </Box>
 
-      {/* Bottom Sign Up Button */}
       {open && (
         <Box textAlign="center">
           {!isLoggedIn ? (
