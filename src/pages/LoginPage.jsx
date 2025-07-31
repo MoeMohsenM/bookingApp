@@ -18,14 +18,15 @@ function LoginPage() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axiosInstance.get("/users", {
-        params: { email: data.email },
-      });
+      const res = await axiosInstance.get("/users");
+      console.log("All users:", res.data);
 
-      const user = res.data[0]; 
+      const user = res.data.find(
+        (u) => u.email.toLowerCase().trim() === data.email.toLowerCase().trim()
+      );
 
       if (user && user.password === data.password) {
-        dispatch(login(user)); 
+        dispatch(login(user));
         navigate("/");
       } else {
         alert("Invalid credentials");
@@ -35,6 +36,7 @@ function LoginPage() {
       alert("Error connecting to server.");
     }
   };
+
 
   return (
     <div className={Styles.login__wrapper}>

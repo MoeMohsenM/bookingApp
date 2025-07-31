@@ -20,7 +20,6 @@ import {
   updateCheckOutDate,
 } from "../features/Hotel/HotelSlice";
 
-
 export default function HotelBookingOverviewPage() {
   const { register, handleSubmit } = useForm();
   const [showModal, setShowModal] = useState(false);
@@ -29,6 +28,8 @@ export default function HotelBookingOverviewPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const isLoggedIn = user?.isAuthenticated;
+
   const handleDateChange = (e, type) => {
     const value = e.target.value;
     if (type === "checkin") dispatch(updateCheckInDate(value));
@@ -36,6 +37,7 @@ export default function HotelBookingOverviewPage() {
   };
 
   const handlePay = () => {
+    if (!isLoggedIn) return;
     dispatch(bookHotel(hotel));
     setShowModal(true);
   };
@@ -244,10 +246,22 @@ export default function HotelBookingOverviewPage() {
               onClick={handlePay}
               variant="contained"
               fullWidth
-              sx={{ py: 1.5 }}
+              sx={{ py: 1.5, mt: 3 }}
+              disabled={!isLoggedIn}
             >
               PAY NOW
             </Button>
+
+            {!isLoggedIn && (
+              <Typography
+                color="error"
+                variant="body2"
+                align="center"
+                sx={{ mt: 1 }}
+              >
+                Please <strong>log in</strong> to complete your booking.
+              </Typography>
+            )}
           </Box>
         </form>
 

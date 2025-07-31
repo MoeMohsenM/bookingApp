@@ -8,6 +8,42 @@
       "phone": "213",
       "password": "asd123@A",
       "bookings": []
+    },
+    {
+      "id": "7d79",
+      "fullName": "mo",
+      "email": "mohsen@mohsen.com",
+      "country": "Egypt",
+      "phone": "123",
+      "password": "asd123@A",
+      "bookings": []
+    },
+    {
+      "id": "6863",
+      "fullName": "mo",
+      "email": "mohsen@asd.com",
+      "country": "Egypt",
+      "phone": "123",
+      "password": "mohsen123@A",
+      "bookings": []
+    },
+    {
+      "id": "6cf5",
+      "fullName": "ana",
+      "email": "ana@ana.com",
+      "country": "Egypt",
+      "phone": "12321564",
+      "password": "ana123@A",
+      "bookings": []
+    },
+    {
+      "id": "96fe",
+      "fullName": "me",
+      "email": "me@me.com",
+      "country": "egypt",
+      "phone": "1234",
+      "password": "me123@A",
+      "bookings": []
     }
   ],
   "hotels": [
